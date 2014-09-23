@@ -1,0 +1,29 @@
+var ometajs = require('ometajs');
+
+ometa ExpParser {
+    dig = /[0-9]/i,
+    num = dig+:ds         -> ['num', parseInt(ds.join(''))],
+    fac = fac:x '*' num:y -> ['mul', x, y]
+        | fac:x '/' num:y -> ['div', x, y]
+        | num,
+    exp = exp:x '+' fac:y -> ['add', x, y]
+        | exp:x '-' fac:y -> ['sub', x, y]
+        | fac
+}
+
+ometa ExpEvaluator {
+    eval = ['num' anything:x]   -> x
+        | ['add' eval:x eval:y] -> (x + y)
+        | ['sub' eval:x eval:y] -> (x - y)
+        | ['mul' eval:x eval:y] -> (x * y)
+        | ['div' eval:x eval:y] -> (x / y)
+}
+
+ometa ExpTranslator {
+    trans = [:rule apply(rule):ans] -> ans,
+    num :x                          -> x.toString(),
+    add trans:x trans:y             -> ('(' + x + '+' + y +')'),
+    sub trans:x trans:y             -> ('(' + x + '-' + y + ')'),
+    mul trans:x trans:y             -> ('(' + x + '*' + y + ')'),
+    div trans:x trans:y             -> ('(' + x + '/' + y + ')')
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+     if( window.location.search.match( /print-pdf/gi ) ) {
+       var link = document.createElement( 'link' );
+       link.rel = 'stylesheet';
+       link.type = 'text/css';
+       link.href = 'css/print/pdf.css';
+       document.getElementsByTagName( 'head' )[0].appendChild( link );
+     }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h1>Мета-шаблонизация</h1>
+          <p>конвертируем Bemhtml в Bh</p>
+        </section>
+
+
+
+        <section>
+          <h2>Bemhtml</h2>
+          <h2>Bh</h2>
+
+          <pre><code>
+block input {
+    tag: 'span'
+
+    mix: { block: 'clearfix' }
+
+    default: {
+        this._attrs = this.ctx.attrs;
+        delete this.ctx.attrs;
+        applyNext();
+    }
+
+    content: {
+        return {
+            elem: 'control',
+            tag: 'input',
+            attrs: this._attrs
+        }
+    }
+}
+          </code></pre>
+
+          <pre><code>
+module.exports = function (bh) {
+    bh.match('input', function (ctx, json) {
+        ctx.tParam('_attrs', json.attrs);
+        delete json.attrs;
+        ctx.tag('span', true);
+        ctx.mix([{ 'block': 'clearfix' }]
+           .concat(ctx.mix()));
+        ctx.content({
+            'elem': 'control',
+            'tag': 'input',
+            'attrs': ctx.tParam('_attrs')
+        }, true);
+    });
+};
+          </code></pre>
+
+        </section>
+
+
+        <section>
+          <h2>(bem)-JSON</h2>
+          <h2>HTML</h2>
+
+          <pre><code>[
+  {
+    "block": "input",
+    "attrs": {
+      "value": "&lt;script&gt;alert('xss');&lt;/script&gt;",
+      "name": "text",
+      "tabindex": 1,
+      "type": "search",
+      "autocomplete": "off",
+      "maxlength": 400
+      }
+  }
+]</code></pre>
+          <pre><code>&lt;span class="input clearfix"&gt;
+    &lt;input
+        class="input__control"
+        value="&lt;script&gt;alert('xss');&lt;/script&gt;"
+        name="text" tabindex="1"
+        type="search"
+        autocomplete="off"
+        maxlength="400"/&gt;
+&lt;/span&gt;</code></pre>
+
+        </section>
+
+        <section>
+          <h2 style="text-align: left;">
+            <span style="color:#FF0000">Я</span>ндекс</h2>
+
+          <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/vkz/images/650485/Ya_islands.png" style="visibility: visible;" data-natural-width="1087" data-natural-height="739">
+        </section>
+
+        <section>
+          <h2>Компиляция</h2>
+          <pre style="color:rgb(51, 51, 51); text-align:center">tokenize &lt; input |     parse     |    serialise</pre>
+
+          <iframe webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-src="https://en.m.wikipedia.org/wiki/Lexical_analysis"></iframe>
+          <iframe webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-src="https://en.m.wikipedia.org/wiki/LALR_parser_generator"></iframe>
+          <iframe webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-src="https://en.m.wikipedia.org/wiki/Code_generation_(compiler)"></iframe>
+        </section>
+
+        <section>
+          <h2>Компиляция</h2>
+          <pre style="color:rgb(51, 51, 51); text-align:center">tokenize &lt; input |     parse     |    serialise</pre>
+
+          <iframe webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-src="https://en.m.wikipedia.org/wiki/Lex_(software)">
+          </iframe>
+
+          <iframe webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-src="https://en.m.wikipedia.org/wiki/Yacc">
+          </iframe>
+
+        </section>
+
+        <section>
+          <h2>Что могли бы использовать?</h2>
+          <ul>
+            <li>Вариации на тему Lex/Yacc (flex, bison)</li>
+            <li>Вариации на тему PEGs (Packrat parsers)</li>
+            <li>Parser Combinators</li>
+            <li>Parsing with derivatives</li>
+          </ul>
+          <h3>Наверн<span style="color:#FF0000">Я</span>ка, много чего еще</h3>
+          <p style="text-align: right;">или ... </p>
+        </section>
+
+        <section>
+          <h1>Выкатить свое</h1>
+          <h2>кастомное барахло</h2>
+
+          <iframe webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-src="https://www.cs.cmu.edu/~cangiuli/img/angry.gif"></iframe>
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="xMidYMid" viewbox="0 0 32 32"><g class="shape-element" fill="#000000"><path d="M16 32c8.837 0 16-7.163 16-16s-7.163-16-16-16-16 7.163-16 16 7.163 16 16 16zM16 3c7.18 0 13 5.82 13 13s-5.82 13-13 13-13-5.82-13-13 5.82-13 13-13zM8 10c0-1.105 0.895-2 2-2s2 0.895 2 2c0 1.105-0.895 2-2 2-1.105 0-2-0.895-2-2zM20 10c0-1.105 0.895-2 2-2s2 0.895 2 2c0 1.105-0.895 2-2 2-1.105 0-2-0.895-2-2zM9.997 24.398l-2.573-1.544c1.749-2.908 4.935-4.855 8.576-4.855 3.641 0 6.827 1.946 8.576 4.855l-2.573 1.544c-1.224-2.036-3.454-3.398-6.003-3.398-2.549 0-4.779 1.362-6.003 3.398z"></path></g></svg>
+        </section>
+
+        <section>
+          <h2>Ometa</h2>
+          <ul>
+            <li>ОО язык для pattern matching</li>
+            <li>один инструмент для всего
+              <ul>
+	        <li>лексический анализ</li>
+	        <li>парсинг</li>
+	        <li>обход и модификация AST</li>
+	        <li>кодогенерация </li>
+              </ul>
+            </li>
+            <li>расширяемый</li>
+          </ul>
+          <h3 style="text-align: right;">н<span style="color:#FF0000">Я</span>ш</h3>
+        </section>
+
+        <section>
+          <h2>Ometa матчит</h2>
+          <ul>
+	    <li>поток символов</li>
+	    <li>структурные данные (массивы)</li>
+          </ul>
+          <h3 style="text-align: right;">н<span style="color:#FF0000">Я</span>ш</h3>
+        </section>
+
+        <section>
+          <h2>Ometa умеет и позволяет</h2>
+          <ul>
+            <li>Наследовать и расширять существующие грамматики</li>
+            <li>Вызывать правила из внешних грамматик</li>
+            <li>Параметризовать правила</li>
+            <li>Определять правила более высокого порядка - "функционалы" над правилами</li>
+            <li>Матчиться на аргументы правил, как ML-языки</li>
+            <li>Выполнять семантические действия и предикаты на языке носителе</li>
+            <li>Писать правила на BNF-похожем синтаксисе</li>
+            <li>Писать правила с "левой рекурсией"</li>
+            <li>Пользоваться всеми возможностями языка носителя</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Ometa</h1>
+          <h2>Знаю /regexp/ - готов к омете</h2>
+        </section>
+
+      </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+     // Full list of configuration options available here:
+     // https://github.com/hakimel/reveal.js#configuration
+     Reveal.initialize({
+       controls: true,
+       progress: true,
+       history: true,
+       center: true,
+
+       theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+       transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+       // Parallax scrolling
+       // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+       // parallaxBackgroundSize: '2100px 900px',
+
+       // Optional libraries used to extend on reveal.js
+       dependencies: [
+	 { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+	 { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+	 { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+	 { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+	 { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+	 { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+       ]
+     });
+    </script>
+
+  </body>
+</html>
