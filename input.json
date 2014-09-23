@@ -1,0 +1,13 @@
+[
+    {
+        "block": "input",
+        "attrs": {
+            "value": "<script>alert('xss');</script>",
+            "name": "text",
+            "tabindex": 1,
+            "type": "search",
+            "autocomplete": "off",
+            "maxlength": 400
+        }
+    }
+]

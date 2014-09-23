@@ -1,0 +1,19 @@
+block input {
+    tag: 'span'
+
+    mix: { block: 'clearfix' }
+
+default: {
+    this._attrs = this.ctx.attrs;
+    delete this.ctx.attrs;
+    applyNext();
+}
+
+    content: {
+        return {
+            elem: 'control',
+            tag: 'input',
+            attrs: this._attrs
+        }
+    }
+}

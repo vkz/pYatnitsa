@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="utf-8">
 
@@ -30,6 +30,35 @@
      }
     </script>
 
+    <style>
+     @import url(https://s3.amazonaws.com/static.slid.es/fonts/opensans/opensans.css);
+     @import url(https://s3.amazonaws.com/static.slid.es/fonts/montserrat/montserrat.css);
+     .theme-font-montserrat .themed,
+     .theme-font-montserrat .reveal {font-family:"Open Sans",sans-serif;font-size:30px}
+     .theme-font-montserrat .themed section,
+     .theme-font-montserrat .reveal section {line-height:1.3}
+     .theme-font-montserrat .themed h1,
+     .theme-font-montserrat .themed h2,
+     .theme-font-montserrat .themed h3,
+     .theme-font-montserrat .themed h4,
+     .theme-font-montserrat .themed h5,
+     .theme-font-montserrat .themed h6,
+     .theme-font-montserrat .reveal h1,
+     .theme-font-montserrat .reveal h2,
+     .theme-font-montserrat .reveal h3,
+     .theme-font-montserrat .reveal h4,
+     .theme-font-montserrat .reveal h5,
+     .theme-font-montserrat .reveal h6 {
+       font-family:"Montserrat", Helvetica, sans-serif;
+       text-transform:none;
+       line-height:1.3;
+       font-weight:normal
+     }
+
+
+    </style>
+
+
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
@@ -47,10 +76,20 @@
 
 
         <section>
-          <h2>Bemhtml</h2>
-          <h2>Bh</h2>
 
-          <pre><code>
+          <div class="sl-block" data-block-type="text" style="width: 410px; left: 16px; top: 103px; height: auto;" data-block-id="3d3c5aff86c2ce05751405ebdd30d2b0">
+            <div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;">
+              <h2>Bemhtml</h2>
+            </div>
+          </div>
+
+          <div class="sl-block" data-block-type="text" style="width: 410px; left: 480px; top: 103px; height: auto;" data-block-id="70c13f43cd4310310c3ce5ab00e0c12a"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 11;">
+            <h2>Bh</h2>
+          </div></div>
+
+          <div class="sl-block" data-block-type="code" data-block-id="a670ebe9dddc4ceddee490e8f655f1b8" style="min-width: 30px; min-height: 30px; width: 451px; height: 424px; left: 16px; top: 199px;">
+            <div class="sl-block-content" style="z-index: 12;">
+              <pre><code>
 block input {
     tag: 'span'
 
@@ -70,9 +109,13 @@ block input {
         }
     }
 }
-          </code></pre>
+              </code></pre>
+            </div>
+          </div>
 
-          <pre><code>
+          <div class="sl-block" data-block-type="code" style="min-width: 30px; min-height: 30px; width: 480px; height: 424px; left: 480px; top: 199px;" data-block-id="df45ce31b3ca0d5464a4c2f54e530cf4">
+            <div class="sl-block-content" style="z-index: 14;">
+              <pre><code>
 module.exports = function (bh) {
     bh.match('input', function (ctx, json) {
         ctx.tParam('_attrs', json.attrs);
@@ -87,7 +130,9 @@ module.exports = function (bh) {
         }, true);
     });
 };
-          </code></pre>
+              </code></pre>
+            </div>
+          </div>
 
         </section>
 
