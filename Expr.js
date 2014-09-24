@@ -8,5 +8,5 @@ var ometajs = require("ometajs"),
     exp = translate.matchAll([ast], 'trans');
 
 ast;
-val;
-exp;
+// val;
+// exp;
