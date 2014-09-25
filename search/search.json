@@ -1,0 +1,14 @@
+{
+    "block": "search",
+    "action": "/yandsearch",
+    "content": [
+        {
+            "elem": "cell",
+            "content": "Cell 1 contents"
+        },
+        {
+            "elem": "cell",
+            "content": "Cell 2 contents"
+        }
+    ]
+}
