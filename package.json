@@ -1,0 +1,19 @@
+{
+  "name": "",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vkz/ometa-presentation/.git"
+  },
+  "author": {
+    "name": "",
+    "url": ""
+  },
+  "license": "",
+  "dependencies": {
+    "ometajs": ""
+  }
+}

@@ -1,12 +1,10 @@
 var ometajs = require("ometajs"),
-    Expressions = require("./Expr.ometajs"),
-    parse = Expressions.ExpParser,
-    evaluate = Expressions.ExpEvaluator,
-    translate = Expressions.ExpTranslator,
-    ast = parse.matchAll('5+6*10', 'exp'),
-    val = evaluate.matchAll([ast], 'eval'),
-    exp = translate.matchAll([ast], 'trans');
+    grammars = require("./Expr.ometajs"),
+    input = '5+6*10',
+    ast,
+    val,
+    expression;
 
-ast;
-val;
-exp;
+ast = grammars.PARSER.matchAll(input, 'exp');
+val = grammars.EVALUATOR.matchAll([ast], 'eval');
+expression = grammars.TRANSLATOR.matchAll([ast], 'trans');
